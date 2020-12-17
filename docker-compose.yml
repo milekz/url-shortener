@@ -16,7 +16,7 @@ services:
       restart: always
       environment:
         DB_HOST: mongo
-        DOMAIN: muchitforyou.com
+        DOMAIN: example.com
       networks:
           - proxy
       ports:
