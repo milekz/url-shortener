@@ -1,4 +1,11 @@
-FROM node:0.10-onbuild
+FROM node:10-alpine
+
+WORKDIR /url
+
+COPY package.json /url
+COPY ./src /url/src/
+
+RUN npm install
 
 EXPOSE 3000
 

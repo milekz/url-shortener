@@ -5,14 +5,14 @@
   "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/met-office-lab/url-shortener.git"
+    "url": "https://github.com/milekz/url-shortener.git"
   },
   "author": "Jacob Tomlinson <jacob@jacobtomlinson.co.uk> (http://www.informaticslab.co.uk/)",
   "license": "GPLv3",
   "bugs": {
-    "url": "https://github.com/met-office-lab/url-shortener/issues"
+    "url": "https://github.com/milekz/url-shortener.git"
   },
-  "homepage": "https://github.com/met-office-lab/url-shortener",
+  "homepage": "https://github.com/milekz/url-shortener.git",
   "dependencies": {
     "body-parser": "^1.14.1",
     "ejs": "^2.3.4",

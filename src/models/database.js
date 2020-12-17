@@ -18,8 +18,11 @@ module.exports = {
 
   connect: function () {
     mongoose.connect('mongodb://' + settings.dbhost + ":" + settings.dbport + '/' + settings.dbname)
+
     this.db = mongoose.connection
-    this.db.on('error', console.error.bind(console, 'connection error:'))
+    //this.db.on('error', console.error.bind(console, 'connection error:'))
+    this.db.on('error', process.exit(1))
+
     this.db.once('open', function (callback) {
       console.log("Connected to database")
     });
