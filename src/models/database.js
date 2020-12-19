@@ -17,7 +17,7 @@ module.exports = {
   db: null,
 
   connect: function () {
-    mongoose.connect('mongodb://' + settings.dbhost + ":" + settings.dbport + '/' + settings.dbname)
+    mongoose.connect('mongodb://' + settings.dbhost )
     this.db = mongoose.connection
     //this.db.on('error', console.error.bind(console, 'connection error:'))
     this.db.on("error", () => {
