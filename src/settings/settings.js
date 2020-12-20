@@ -14,7 +14,8 @@ module.exports = {
     } else if (this.port == 443){
       return "https://" + this.domain
     } else {
-      return "http://" + this.domain + ":" + this.port
+//      return "http://" + this.domain + ":" + this.port
+       return "https://" + this.domain
     }
   }
 }
