@@ -39,14 +39,14 @@ module.exports = {
 
   },
 
-  get_all: function (short, callback, uid = -1) {
-    if (uid < 0) {
+  get_all: function (short, callback, xuid = -1) {
+    if (xuid < 0) {
       urlModel.find({}, function (err, url) {
         //console.log(url)
         callback(url)
       })
     } else {
-      urlModel.find({}, function (err, url) {
+      urlModel.find({ uid: xuid }, function (err, url) {
         console.log(url)
         callback(url)
       })
