@@ -9,7 +9,7 @@ var settings = require('../settings/settings')
 var urlSchema = mongoose.Schema({
   url: String,
   short: String,
-  uid: Bigint
+  uid: Number
 });
 var urlModel = mongoose.model('url', urlSchema)
 
@@ -39,7 +39,7 @@ module.exports = {
 
   },
 
-  get_all: function (short, callback) {
+  get_all: function (short, callback, cid = -1) {
     urlModel.find({}, function (err, url) {
       //console.log(url)
       callback(url)
