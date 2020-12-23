@@ -64,6 +64,30 @@ router.get('/getall/:uid', function (req, res) {
   })
 })
 
+router.post('/remove', function (req, res) {
+  db.remove(req.body.uuid, function (url) {
+    //console.log(url)
+    if (url.result.n == 1) {
+      var data = build_response(200, "Found & deleted", url)
+    } else {
+      var data = build_response(404, "Not found", null)
+    }
+    respond(res, data)
+  })
+})
+
+router.post('/edit', function (req, res) {
+  db.edit(req.body.uuid, req.body.newtarget, function (url) {
+    //console.log(url)
+    if (url) {
+      var data = build_response(200, "Found & edited", url)
+    } else {
+      var data = build_response(404, "Not found", null)
+    }
+    respond(res, data)
+  })
+})
+
 router.get('/getall', function (req, res) {
   db.get_all(-1, function (url) {
     //console.log(url)

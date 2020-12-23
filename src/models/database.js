@@ -36,7 +36,22 @@ module.exports = {
       console.log(url)
       callback(url)
     })
+  },
 
+  remove: function (uuid, callback) {
+    console.log("To Remove " + uuid)
+    urlModel.deleteOne({ '_id': uuid }, function (err, url) {
+      console.log(url)
+      callback(url)
+    })
+  },
+
+  edit: function (uuid, newtarget, callback) {
+    console.log("To edit " + uuid)
+    urlModel.findOneAndUpdate({ '_id': uuid }, { 'url': newtarget }, function (err, url) {
+      console.log(url)
+      callback(url)
+    })
   },
 
   get_all: function (uid = -1, callback) {
