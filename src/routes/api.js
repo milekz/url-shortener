@@ -10,6 +10,15 @@ var settings = require('../settings/settings')
 // Connect to database
 db.connect()
 
+function isEmpty(obj) {
+  for (var prop in obj) {
+    if (obj.hasOwnProperty(prop))
+      return false;
+  }
+
+  return true;
+}
+
 // Utility functions
 var build_response = function (status, message, result) {
   return {
@@ -43,14 +52,25 @@ router.get('/check/:short', function (req, res) {
   })
 })
 
-router.get('/getall', function (req, res) {
-  db.get_all(null, function (url) {
-    //console.log(url)
-    if (url) {
-      var answer = '';
-      var data = build_response(200, "Short exists", url)
+router.get('/getall/:uid', function (req, res) {
+  db.get_all(req.params.uid, function (url) {
+    console.log(url)
+    if (!isEmpty(url)) {
+      var data = build_response(200, "Found", url)
     } else {
-      var data = build_response(404, "Short not found", null)
+      var data = build_response(404, "Not found", null)
+    }
+    respond(res, data)
+  })
+})
+
+router.get('/getall', function (req, res) {
+  db.get_all(-1, function (url) {
+    //console.log(url)
+    if (!isEmpty(url)) {
+      var data = build_response(200, "Found", url)
+    } else {
+      var data = build_response(404, "Not found", null)
     }
     respond(res, data)
   })
@@ -68,14 +88,14 @@ router.post('/create', function (req, res) {
       console.log("DB request made")
       if (creation) {
         console.log("Success, short created!")
-        var data = build_response(201, "Success, short created!", { "url": creation.url, "short": creation.short, "baseurl": settings.getBaseURL() })
+        var data = build_response(201, "Success, short created!", { "url": creation.url, "short": creation.short, "baseurl": settings.getBaseURL(), "uid": creation.uid })
       } else {
         console.log("Failed to create")
         var data = build_response(400, "Failed to create: " + err, null)
         console.log(data)
       }
       respond(res, data)
-    })
+    }, req.body.uid)
   }
 })
 

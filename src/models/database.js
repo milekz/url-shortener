@@ -39,16 +39,21 @@ module.exports = {
 
   },
 
-  get_all: function (short, callback, xuid = -1) {
-    if (xuid < 0) {
+  get_all: function (uid = -1, callback) {
+    if (uid < 0) {
       urlModel.find({}, function (err, url) {
         //console.log(url)
         callback(url)
       })
     } else {
-      urlModel.find({ uid: xuid }, function (err, url) {
-        console.log(url)
-        callback(url)
+      urlModel.find({ 'uid': uid }, function (err, url) {
+        //console.log(url)
+        if (url) {
+          callback(url)
+        } else {
+          callback(null)
+        }
+
       })
     }
   },
@@ -70,7 +75,7 @@ module.exports = {
     return short
   },
 
-  create: function (url, short, callback, uid = 0) {
+  create: function (url, short, callback, uid = -1) {
     var db = this
 
     if (short === undefined) {
