@@ -18,7 +18,7 @@ module.exports = {
   db: null,
 
   connect: function () {
-    mongoose.connect('mongodb://' + settings.dbhost )
+    mongoose.connect('mongodb://' + settings.dbhost)
     this.db = mongoose.connection
     //this.db.on('error', console.error.bind(console, 'connection error:'))
     this.db.on("error", () => {
@@ -39,11 +39,18 @@ module.exports = {
 
   },
 
-  get_all: function (short, callback, cid = -1) {
-    urlModel.find({}, function (err, url) {
-      //console.log(url)
-      callback(url)
-    })
+  get_all: function (short, callback, uid = -1) {
+    if (uid < 0) {
+      urlModel.find({}, function (err, url) {
+        //console.log(url)
+        callback(url)
+      })
+    } else {
+      urlModel.find({}, function (err, url) {
+        console.log(url)
+        callback(url)
+      })
+    }
   },
 
   check_short: function (short, callback) {
@@ -63,7 +70,7 @@ module.exports = {
     return short
   },
 
-  create: function (url, short, callback, uid = 0 ) {
+  create: function (url, short, callback, uid = 0) {
     var db = this
 
     if (short === undefined) {
@@ -82,7 +89,7 @@ module.exports = {
           if (result && !userdefshort) {
             callback(null, result)
           } else {
-            var newUrl = new urlModel({ "url": url, "short": short, "uid" : uid })
+            var newUrl = new urlModel({ "url": url, "short": short, "uid": uid })
             newUrl.save(function (error) {
               if (error) {
                 console.log("Write to mongo failed")
