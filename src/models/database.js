@@ -8,7 +8,8 @@ var settings = require('../settings/settings')
 // Create schemas and models for mongo
 var urlSchema = mongoose.Schema({
   url: String,
-  short: String
+  short: String,
+  uid: Bigint
 });
 var urlModel = mongoose.model('url', urlSchema)
 
@@ -62,7 +63,7 @@ module.exports = {
     return short
   },
 
-  create: function (url, short, callback) {
+  create: function (url, short, callback, uid = 0 ) {
     var db = this
 
     if (short === undefined) {
@@ -81,7 +82,7 @@ module.exports = {
           if (result && !userdefshort) {
             callback(null, result)
           } else {
-            var newUrl = new urlModel({ "url": url, "short": short })
+            var newUrl = new urlModel({ "url": url, "short": short, "uid" : uid })
             newUrl.save(function (error) {
               if (error) {
                 console.log("Write to mongo failed")
