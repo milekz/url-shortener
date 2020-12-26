@@ -119,7 +119,7 @@ router.post('/create', function (req, res) {
         console.log(data)
       }
       respond(res, data)
-    }, req.body.uid)
+    }, req.body.uid, req.body.shortlength)
   }
 })
 

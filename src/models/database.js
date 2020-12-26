@@ -85,16 +85,19 @@ module.exports = {
     })
   },
 
-  generate_short: function () {
-    short = randomstring.generate(settings.shortlength)
+  generate_short: function (sl = settings.shortlength) {
+    if (sl < 5) {
+      sl = 5
+    }
+    short = randomstring.generate(sl * 1)
     return short
   },
 
-  create: function (url, short, callback, uid = -1) {
+  create: function (url, short, callback, uid = -1, shortlength) {
     var db = this
 
     if (short === undefined) {
-      short = db.generate_short()
+      short = db.generate_short(shortlength)
       userdefshort = false
     } else {
       userdefshort = true
