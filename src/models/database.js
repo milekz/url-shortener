@@ -9,7 +9,9 @@ var settings = require('../settings/settings')
 var urlSchema = mongoose.Schema({
   url: String,
   short: String,
-  uid: Number
+  base: String,
+  uid: Number,
+  time: Number,
 });
 var urlModel = mongoose.model('url', urlSchema)
 
@@ -93,7 +95,7 @@ module.exports = {
     return short
   },
 
-  create: function (url, short, callback, uid = -1, shortlength) {
+  create: function (url, short, callback, uid = -1, shortlength, base = null, time = Math.floor(new Date().getTime() / 1000)) {
     var db = this
 
     if (short === undefined) {
@@ -112,7 +114,7 @@ module.exports = {
           if (result && !userdefshort) {
             callback(null, result)
           } else {
-            var newUrl = new urlModel({ "url": url, "short": short, "uid": uid })
+            var newUrl = new urlModel({ "url": url, "short": short, "base": base, "uid": uid, "time": time })
             newUrl.save(function (error) {
               if (error) {
                 console.log("Write to mongo failed")

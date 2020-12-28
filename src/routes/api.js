@@ -108,18 +108,19 @@ router.post('/create', function (req, res) {
     respond(res, data)
   } else {
     console.log("Creating url")
+    var time = Math.floor(new Date().getTime() / 1000)
     db.create(req.body.url, req.body.short, function (err, creation) {
       console.log("DB request made")
       if (creation) {
         console.log("Success, short created!")
-        var data = build_response(201, "Success, short created!", { "url": creation.url, "short": creation.short, "baseurl": settings.getBaseURL(), "uid": creation.uid })
+        var data = build_response(201, "Success, short created!", { "url": creation.url, "short": creation.short, "baseurl": req.body.base || settings.getBaseURL(), "uid": creation.uid, "time": time })
       } else {
         console.log("Failed to create")
         var data = build_response(400, "Failed to create: " + err, null)
         console.log(data)
       }
       respond(res, data)
-    }, req.body.uid, req.body.shortlength)
+    }, req.body.uid, req.body.shortlength, req.body.base || settings.getBaseURL(), time)
   }
 })
 
